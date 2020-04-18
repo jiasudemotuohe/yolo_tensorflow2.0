@@ -5,9 +5,10 @@
 import tensorflow as tf
 import numpy as np
 import config
+import cv2
 
 
-def get_train_test_data():
+def get_batch_data():
     """
     this function slove the following question
 
@@ -18,14 +19,14 @@ def get_train_test_data():
     text_data = tf.data.TextLineDataset(config.PASCAL_TXT_FILE)
 
     batch_lines_data = text_data.batch(batch_size=config.BATCH_SIZE, drop_remainder=False)
-    batch_images = []
+    batch_image_names = []
     batch_labels = []
     for batch_data in batch_lines_data:
-        images, labels = parse_batch_data(batch_data)
-        batch_images.append(images)
+        names, labels = parse_batch_data(batch_data)
+        batch_image_names.append(names)
         batch_labels.append(labels)
 
-    return np.asarray(batch_images), batch_labels
+    return np.asarray(batch_image_names), np.asarray(batch_labels)
 
 
 def __parse_singal_line(line):
@@ -68,5 +69,30 @@ def parse_batch_data(batch_data):
     return image_names, labels
 
 
+def __resize_image(image):
+    """
+    each picture size is different , need to resize the size of picture to uniform size for the model train
+
+    """
+    image = tf.image.resize_with_pad(image, config.IMAGE_HEIGHT, config.IMAGE_WIDTH)
+    return image
+
+
+def read_image_from_names(image_names):
+    """
+    read the image data from the specify image_path
+    """
+    batch_images = []
+    for name in image_names:
+        image = tf.io.read_file(config.JPEG_IMAGES_PATH + name)
+        image = tf.io.decode_image(image, channels=config.IMAGE_CHANNEL, dtype=tf.dtypes.float32)
+
+        image = __resize_image(image) / 255.0
+
+        batch_images.append(image)
+
+    return batch_images
+
+
 if __name__ == '__main__':
-    get_train_test_data()
+    get_batch_data()

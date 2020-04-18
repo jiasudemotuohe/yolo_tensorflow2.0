@@ -3,14 +3,14 @@
 # @Author  : speeding_motor
 
 
-Annotations_PATH = "/Users/anyongyi/Downloads/VOC2012/Annotations"
-JPEG_IMAGES_PATH = "/Users/anyongyi/Downloads/VOC2012/JPEGImages"
+Annotations_PATH = "/Users/anyongyi/Downloads/VOC2012/Annotations/"
+JPEG_IMAGES_PATH = "/Users/anyongyi/Downloads/VOC2012/JPEGImages/"
 PASCAL_TXT_FILE = 'datasets/pascal.txt'
 
 IMAGE_HEIGHT = 416
 IMAGE_WIDTH = 416
 IMAGE_CHANNEL = 3
-BATCH_SIZE = 1280
+BATCH_SIZE = 128
 EPOCHS = 100
 
 PASCAL_VOC_CLASSES = {"person": 1,
