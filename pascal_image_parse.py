@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 # @Time    : 2020-04-18 13:33
-# @Author  : speeding_moto
+# @Author  : speeding_motor
 
 import os
 import config
@@ -96,10 +96,10 @@ def parse_pascal_voc_to_txt():
     if os.path.exists(config.PASCAL_TXT_FILE):
         os.remove(config.PASCAL_TXT_FILE)
 
-    items = os.listdir(config.Annotations_PATH)
+    files = os.listdir(config.Annotations_PATH)
 
-    for item in items:
-        file_name, obj_box_lists = image_info = __xml_parse(item)
+    for file in files:
+        file_name, obj_box_lists = __xml_parse(file)
         # print(file_name, obj_box_lists)
 
         line_info = __combine_pictureinfo_to_line(file_name, obj_box_lists)

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 # @Time    : 2020-04-18 13:33
-# @Author  :
+# @Author  : speeding_motor
 
 
 Annotations_PATH = "/Users/anyongyi/Downloads/VOC2012/Annotations"
@@ -10,6 +10,8 @@ PASCAL_TXT_FILE = 'datasets/pascal.txt'
 IMAGE_HEIGHT = 416
 IMAGE_WIDTH = 416
 IMAGE_CHANNEL = 3
+BATCH_SIZE = 1280
+EPOCHS = 100
 
 PASCAL_VOC_CLASSES = {"person": 1,
                       "bird": 2,
