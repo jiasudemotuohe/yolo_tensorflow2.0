@@ -8,7 +8,7 @@ import xml.dom.minidom
 import time
 
 
-def _xml_parse(xml_file):
+def __xml_parse(xml_file):
     file_path = os.path.join(config.Annotations_PATH, xml_file)
     dom_tree = xml.dom.minidom.parse(file_path)
 
@@ -80,7 +80,7 @@ def __relocation_box_with_pad(height, width, xmin, ymin, xmax, ymax):
     return int(xmin), int(ymin), int(xmax), int(ymax)
 
 
-def __combine_pictyre_info(file_name, obj_box_lists):
+def __combine_pictureinfo_to_line(file_name, obj_box_lists):
     file_name += " "
     for obj in obj_box_lists:
         for item in obj:
@@ -88,16 +88,26 @@ def __combine_pictyre_info(file_name, obj_box_lists):
     return file_name
 
 
-if __name__ == '__main__':
+def parse_pascal_voc_to_txt():
+    """
+    parse the pascal xml annotation to txt file, if the pascal, if txt file is exist, delete it first
+
+    """
+    if os.path.exists(config.PASCAL_TXT_FILE):
+        os.remove(config.PASCAL_TXT_FILE)
 
     items = os.listdir(config.Annotations_PATH)
 
     for item in items:
-        file_name, obj_box_lists = image_info = _xml_parse(item)
+        file_name, obj_box_lists = image_info = __xml_parse(item)
         # print(file_name, obj_box_lists)
 
-        line_info = __combine_pictyre_info(file_name, obj_box_lists)
+        line_info = __combine_pictureinfo_to_line(file_name, obj_box_lists)
         with open(config.PASCAL_TXT_FILE, mode="a") as f:
             f.write(line_info + "\n")
+
+
+if __name__ == '__main__':
+    parse_pascal_voc_to_txt()
 
     print("parse pascal image spend %s second" % time.clock())

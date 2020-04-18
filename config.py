@@ -4,7 +4,7 @@
 
 
 Annotations_PATH = "/Users/anyongyi/Downloads/VOC2012/Annotations"
-JPEGIMAGES_PATH = "/Users/anyongyi/Downloads/VOC2012/JPEGImages"
+JPEG_IMAGES_PATH = "/Users/anyongyi/Downloads/VOC2012/JPEGImages"
 PASCAL_TXT_FILE = 'datasets/pascal.txt'
 
 IMAGE_HEIGHT = 416
