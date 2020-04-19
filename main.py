@@ -4,6 +4,8 @@
 
 import config
 import generate_data
+import matplotlib
+matplotlib.use("TkAgg")
 from matplotlib import pyplot
 
 
@@ -23,16 +25,22 @@ def train():
 def show_image(images):
 
     for i, image in enumerate(images):
-        pyplot.subplot(3, 3, i + 1)
-        pyplot.imshow(image.numpy())
+        pyplot.subplot(3, 3, i+1)
+        pyplot.imshow(images[i].numpy() * 255)
+        pyplot.xlim()
+        pyplot.xticks([])
+        pyplot.yticks([])
 
-        print(images[i].numpy())
+        pyplot.xlabel(None)
+        pyplot.ylabel(None)
+
     pyplot.show()
 
 
-if __name__ == '__main__':
-   train()
 
+if __name__ == '__main__':
+
+   train()
    print("running speed time i")
 
 
