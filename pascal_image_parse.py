@@ -42,7 +42,7 @@ def __xml_parse(xml_file):
         """
         xmin, ymin, xmax, ymax = __relocation_box_with_pad(height, width, xmin, ymin, xmax, ymax)
 
-        obj_box_lists.append([config.PASCAL_VOC_CLASSES[class_name], xmin, ymin, xmax, ymax])
+        obj_box_lists.append([config.PASCAL_VOC_CLASSES[class_name], xmin, xmax, ymin, ymax])
 
     return file_name, obj_box_lists
 
