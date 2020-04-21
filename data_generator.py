@@ -94,10 +94,9 @@ def read_image_from_names(image_names):
         image = tf.io.decode_image(image, channels=config.IMAGE_CHANNEL, dtype=tf.dtypes.float32)
 
         image = __resize_image(image) / 255.0
-
         batch_images.append(image)
 
-    return np.asarray(batch_images)
+    return batch_images
 
 
 def generate_label_from_box(batch_boxs):
