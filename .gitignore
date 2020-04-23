@@ -1,3 +1,4 @@
 
 *.pyc
 datasets/pascal.txt
+test.py

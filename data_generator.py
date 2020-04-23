@@ -96,7 +96,7 @@ def read_image_from_names(image_names):
         image = __resize_image(image) / 255.0
         batch_images.append(image)
 
-    return batch_images
+    return tf.stack(batch_images, axis=0)
 
 
 def generate_label_from_box(batch_boxs):
@@ -126,7 +126,7 @@ def generate_label_from_box(batch_boxs):
         per_wp_box = wp_box[i][per_mask]
         per_hp_box = hp_box[i][per_mask]
 
-        for j in range(len(per_pbox)):
+        for j in range(1):
             classes_id = int(per_pbox[j, 0])
             x = np.floor(per_x_center[j] / config.IMAGE_WIDTH * config.GRID_SIZE).astype(int)
             y = np.floor(per_y_center[j] / config.IMAGE_HEIGHT * config.GRID_SIZE).astype(int)
