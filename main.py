@@ -34,9 +34,9 @@ def train():
                 loss = yolo_loss(batch_labels, batch_prediction)
 
             grads = tape.gradient(loss, yolo_model.trainable_weights)
-            optimizer.apply_gradients(zip(grads, yolo_model.trainable_weights))
+            optimizer.apply_gradients(zip(grads, yolo_model.trainable_variables))
 
-            print("epoch ={}, loss={}".format(epoch, loss))
+            print("epoch ={},i = {} loss={}".format(epoch, i, loss))
 
 
 def show_image(images):
