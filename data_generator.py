@@ -93,7 +93,7 @@ def read_image_from_names(image_names):
         image = tf.io.read_file(config.JPEG_IMAGES_PATH + name)
         image = tf.io.decode_image(image, channels=config.IMAGE_CHANNEL, dtype=tf.dtypes.float32)
 
-        image = __resize_image(image) / 255.0
+        image = __resize_image(image)
         batch_images.append(image)
 
     return tf.stack(batch_images, axis=0)
