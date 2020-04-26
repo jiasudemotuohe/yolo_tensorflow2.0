@@ -15,7 +15,7 @@ class YoloModel(keras.Model):
 
         self.model = keras.Sequential()
 
-        self.model.add(keras.layers.Conv2D(filters=64, kernel_size=(7, 7), strides=2, padding='same'))
+        self.model.add(keras.layers.Conv2D(filters=64, kernel_size=(7, 7), strides=2, padding='same', input_shape=[448, 448, 3]))
         self.model.add(keras.layers.LeakyReLU(alpha))
         self.model.add(self.__maxpooling_layer(pool_sizes=(2, 2), strides=2))
 
@@ -69,15 +69,15 @@ class YoloModel(keras.Model):
         self.model.add(self.__convolution__layer(filters=1024, kernel_size=(3, 3), strides=(2, 2), padding='same'))
 
         self.model.add(keras.layers.Flatten())
-        self.model.add(keras.layers.Dense(4096))
+        self.model.add(keras.layers.Dense(4096, kernel_initializer='glorot_uniform'))
         self.model.add(keras.layers.LeakyReLU(alpha))
 
-        self.model.add(keras.layers.Dense(1225))
+        self.model.add(keras.layers.Dense(1225, trainable=True, kernel_initializer='glorot_uniform'))
         self.model.add(keras.layers.ReLU())
 
-        self.model.add(keras.layers.Reshape(target_shape=[GRID_SIZE, GRID_SIZE, 25]))
+        self.model.add(keras.layers.Reshape([GRID_SIZE, GRID_SIZE, 25]))
 
-        self.build(input_shape=(None, 448, 448, 3))
+        # self.build()
 
     def call(self, inputs):
         return self.model(inputs)

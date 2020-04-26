@@ -19,14 +19,14 @@ def train():
 
     yolo_model = yolo.YoloModel()
     yolo_loss = YoloLoss()
-    optimizer = keras.optimizers.Adam()
+    optimizer = keras.optimizers.Adam(learning_rate=0.1)
 
     for epoch in range(config.EPOCHS):
         for i in range(batch_image_names.shape[0]//config.BATCH_SIZE):
             batch_labels = data_generator.generate_label_from_box(batch_boxs[i])
             batch_images = data_generator.read_image_from_names(batch_image_names[i])
 
-            # show_image(batch_images[0:100])
+            # show_image(batch_images[0:config.BATCH_SIZE])
             with tf.GradientTape() as tape:
 
                 batch_prediction = yolo_model(batch_images)
@@ -38,12 +38,15 @@ def train():
 
             print("epoch ={},i = {} loss={}".format(epoch, i, loss))
 
+    keras.utils.plot_model(yolo_model, to_file='model.png', show_shapes=True, show_layer_names=True,
+                               rankdir='LR', expand_nested=False, dpi=96)
+
 
 def show_image(images):
     pyplot.figure(figsize=(20, 20))
     for i, image in enumerate(images):
-        pyplot.subplot(10, 10, i+1)
-        pyplot.imshow(images[i].numpy() * 255)
+        pyplot.subplot(2, 6, i+1)
+        pyplot.imshow(images[i].numpy())
         pyplot.xticks([])
         pyplot.yticks([])
 

@@ -2,3 +2,4 @@
 *.pyc
 datasets/pascal.txt
 test.py
+datasets/yolo_net_.pdf

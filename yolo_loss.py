@@ -33,18 +33,22 @@ class YoloLoss(keras.losses.Loss):
         y_pred_object_proba = tf.gather(params=y_pred, indices=[0], axis=3)
 
         loss = tf.square(y_ture_object_proba - y_pred_object_proba) * self.classify_scale
-        return tf.reduce_sum(input_tensor=loss, axis=[1, 2, 3], keepdims=False, name="object_probability_loss")
+        return tf.reduce_sum(input_tensor=loss, axis=[0, 1, 2, 3], keepdims=False, name="object_probability_loss")
 
     def __classsification_loss(self, y_true, y_pred):
         """
-        return: the classify loss with the classify
+        return: when no object, not compute this
 
         """
         classs_index = np.array(range(len(config.PASCAL_VOC_CLASSES)))+5
         true_class = tf.gather(params=y_true, indices=classs_index, axis=3)
         pred_class = tf.gather(params=y_true, indices=classs_index, axis=3)
 
+        object_mask = tf.gather(params=y_true, indices=0, axis=3)
+
         loss = tf.square(true_class - pred_class)
+        loss *= tf.expand_dims(object_mask, axis=-1)
+
         return tf.reduce_sum(input_tensor=loss, axis=[1, 2, 3], keepdims=False, name="classification_loss")
 
     def __localization__loss(self, y_true, y_pred):
